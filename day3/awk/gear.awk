@@ -117,8 +117,22 @@ END {
             }
 
             if(is_number(substr(previous_line, star_start + 1, 1)) &&
-               is_number(substr(previous_line, star_start - 1, 1))) {
+               is_number(substr(previous_line, star_start - 1, 1)) &&
+               is_number(substr(previous_line, star_start, 1))) {
                 numbers_ratio["mt"] = nb_other_right(previous_line, star_start - 2);
+            }
+
+            if(!is_number(substr(previous_line, star_start + 1, 1)) &&
+               !is_number(substr(previous_line, star_start - 1, 1)) &&
+               is_number(substr(previous_line, star_start, 1))) {
+                numbers_ratio["mt"] = nb_other_right(previous_line, star_start - 1);
+            }
+
+            if(is_number(substr(previous_line, star_start + 1, 1)) &&
+               is_number(substr(previous_line, star_start - 1, 1)) &&
+               !is_number(substr(previous_line, star_start, 1))) {
+                numbers_ratio["mtr"] = nb_other_right(previous_line, star_start);
+                numbers_ratio["mtl"] = nb_other_left(previous_line, star_start);
             }
             
             if(!is_number(substr(previous_line, star_start - 1, 1)) &&
@@ -132,8 +146,22 @@ END {
             }
 
             if(is_number(substr(next_line, star_start + 1, 1)) &&
-               is_number(substr(next_line, star_start - 1, 1))) {
+               is_number(substr(next_line, star_start - 1, 1)) &&
+               is_number(substr(next_line, star_start, 1))) {
                 numbers_ratio["mb"] = nb_other_right(next_line, star_start - 2);
+            }
+
+            if(!is_number(substr(next_line, star_start + 1, 1)) &&
+               !is_number(substr(next_line, star_start - 1, 1)) &&
+               is_number(substr(next_line, star_start, 1))) {
+                numbers_ratio["mb"] = nb_other_right(next_line, star_start - 1);
+            }
+
+            if(is_number(substr(next_line, star_start + 1, 1)) &&
+               is_number(substr(next_line, star_start - 1, 1)) &&
+               !is_number(substr(next_line, star_start, 1))) {
+                numbers_ratio["mbr"] = nb_other_right(next_line, star_start);
+                numbers_ratio["mbl"] = nb_other_left(next_line, star_start);
             }
             
             if(!is_number(substr(next_line, star_start - 1, 1)) &&
