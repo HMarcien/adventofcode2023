@@ -1,15 +1,23 @@
 #! /usr/bin/gawk -f
 
 function get_win_list(record) {
-    match(record, /Card [0-9]+: (.+) \|/, w_list)
+    match(record, /Card\s+[0-9]+:\s+(.+) \|/, w_list)
     split(w_list[1], win_list);
     for (num in win_list)
         wlist[win_list[num]] = win_list[num];
 }
 
 function get_hold_list(record) {
-    match(record, /\| (.+)/, h_list);
+    match(record, /\|\s+(.+)/, h_list);
     split(h_list[1], hold_list);
+}
+
+function print_list(list) {
+    str = "";
+    for (el in list) {
+        str = (str " " list[el])
+    }
+    print str
 }
 
 BEGIN {
@@ -20,17 +28,19 @@ BEGIN {
     split("", wlist);
 
     get_win_list($0);
+    
     get_hold_list($0);
-    record_match = 0;
+    
+    winners = 0;
     
     for (num in hold_list) {
         if (hold_list[num] in wlist) {
-            record_match += 1;
+            winners += 1;
         }
     }
     
-    if (record_match > 0)
-        total_point += (2 ^ (record_match - 1));
+    if (winners > 0)
+        total_point += (2 ^ (winners - 1));
 }
 
 END {
